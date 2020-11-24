@@ -1,0 +1,17 @@
+{
+	"port": 3001,
+	"settings": {
+		"csrf": false,
+		"debug": false,
+		"loggerFormat": "tiny",
+		"session": {
+			"cookie": {
+				"sameSite": "lax"
+			},
+			"store": "@foal/typeorm"
+		}
+	},
+	"database": {
+		"synchronize": false
+	}
+}
