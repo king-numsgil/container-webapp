@@ -10,7 +10,7 @@ module.exports = {
 	ssl: process.env.NODE_ENV === "production" ? {
 		rejectUnauthorized: false,
 		ca: Config.get2("database.certificate", "any"),
-	} : null,
+	} : false,
 	dropSchema: Config.get2("database.dropSchema", "boolean", false),
 	uuidExtension: "pgcrypto",
 	entities: ["build/app/**/*.entity.js"],
