@@ -2,7 +2,11 @@ const {Config} = require("@foal/core");
 
 module.exports = {
 	type: "postgres",
-	url: Config.get2("database.url", "string"),
+	host: Config.get2("database.host", "string"),
+	port: Config.get2("database.port", "number", 5432),
+	username: Config.get2("database.username", "string"),
+	password: Config.get2("database.password", "string"),
+	database: Config.get2("database.database", "string"),
 	ssl: process.env.NODE_ENV === "production" ? {
 		rejectUnauthorized: false,
 		ca: Config.get2("database.certificate", "any"),
