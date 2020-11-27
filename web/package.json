@@ -21,6 +21,7 @@
 		"react-hook-form": "^6.11.3",
 		"react-icons": "^3.11.0",
 		"react-navi": "^0.14.4",
+		"react-navi-helmet-async": "^0.14.4",
 		"react-scripts": "^4.0.1",
 		"react-use": "^15.3.4",
 		"swr": "^0.3.9",

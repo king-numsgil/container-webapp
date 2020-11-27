@@ -1,4 +1,5 @@
 import {ChakraProvider, ColorModeScript} from "@chakra-ui/react";
+import HelmetProvider from "react-navi-helmet-async";
 import {Router, View} from "react-navi";
 import React, {Suspense} from "react";
 import ReactDOM from "react-dom";
@@ -10,11 +11,13 @@ ReactDOM.render(
 		<ColorModeScript initialColorMode="dark" />
 
 		<ChakraProvider>
-			<Router routes={Routes}>
-				<Suspense fallback={null}>
-					<View/>
-				</Suspense>
-			</Router>
+			<HelmetProvider>
+				<Router routes={Routes}>
+					<Suspense fallback={null}>
+						<View />
+					</Suspense>
+				</Router>
+			</HelmetProvider>
 		</ChakraProvider>
 	</React.StrictMode>,
 	document.getElementById("root")
