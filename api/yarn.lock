@@ -2,10 +2,19 @@
 # yarn lockfile v1
 
 
-"@foal/core@^1.11.2":
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/@foal/core/-/core-1.11.2.tgz#41a746120e477616b7aee51c8b20b04591423a55"
-  integrity sha512-dRb+UIaX7M9mKlmIvMJeXVIED9x4Q9DA5zgV7jboIGSBqT7aHbPI2Mwr94TEBzCPgOpQT+SPvF+nnO3W8fb9Vg==
+"@foal/cli@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@foal/cli/-/cli-1.12.0.tgz#c79f982000d06518f37c1fac7b5ca895fbd9e264"
+  integrity sha512-wtRPfo/u7tIMW552InRFG3gEAUPSN/8MEHohTrvTAWnqLve4s41Xm6luAtnuVp5UEpeuHkkAIdzADVjkv4jh2A==
+  dependencies:
+    ajv "~6.12.0"
+    colors "~1.4.0"
+    commander "~5.0.0"
+
+"@foal/core@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@foal/core/-/core-1.12.0.tgz#b71dbd5cdade788e4bd0e164dd80cdb2b01c287e"
+  integrity sha512-f3eP0PLqNEB6SxBZEeqc2ZsDYk0U0BLbJty3NnUl7QSOZAzDTLJmOz4hK+cGC2OIPCZpmXNni+15IFesm5nJPQ==
   dependencies:
     ajv "~6.12.0"
     cookie-parser "~1.4.4"
@@ -15,22 +24,22 @@
     pump "~3.0.0"
     reflect-metadata "~0.1.13"
 
-"@foal/typeorm@^1.11.2":
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/@foal/typeorm/-/typeorm-1.11.2.tgz#7418684716068a279a9a3c3734bb2809fc2973d2"
-  integrity sha512-RPaO/2RFPMt3I49CtE3CPCdpaMgIyyyF8DzFJxy8KnT6baTsRxZ+1z3fR8Qw7HW9tPg3Po2qgbpsQENYsaX93A==
+"@foal/typeorm@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@foal/typeorm/-/typeorm-1.12.0.tgz#cd3a976e6c9151f8b8e239310c0fa3538971c309"
+  integrity sha512-OzqVU6eVApzv5u/c/MthlyKKBGUfA4TDMT7IyoB25qkxrzv1Ha1vuTckST956uAsBda/PRrhi4boxucu0Y2zRQ==
   dependencies:
-    "@foal/core" "^1.11.2"
+    "@foal/core" "^1.12.0"
 
 "@sqltools/formatter@1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@sqltools/formatter/-/formatter-1.2.2.tgz#9390a8127c0dcba61ebd7fdcc748655e191bdd68"
   integrity sha512-/5O7Fq6Vnv8L6ucmPjaWbVG1XkP4FO+w5glqfkIsq3Xw4oyNAdJddbnYodNDAfjVUvo/rrSCTom4kAND7T1o5Q==
 
-"@types/node@^14.14.9":
-  version "14.14.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.9.tgz#04afc9a25c6ff93da14deabd65dc44485b53c8d6"
-  integrity sha512-JsoLXFppG62tWTklIoO4knA+oDTYsmqWxHRvd4lpmfQRNhX6osheUOWETP2jMoV/2bEHuMra8Pp3Dmo/stBFcw==
+"@types/node@^14.14.10":
+  version "14.14.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.10.tgz#5958a82e41863cfc71f2307b3748e3491ba03785"
+  integrity sha512-J32dgx2hw8vXrSbu4ZlVhn1Nm3GbeCFNw2FWL8S5QKucHGY0cyNwjdQdO+KMBZ4wpmC7KhLCiNsdk1RFRIYUQQ==
 
 accepts@~1.3.7:
   version "1.3.7"
@@ -307,6 +316,16 @@ color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+
+colors@~1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
+  integrity sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
+
+commander@~5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-5.0.0.tgz#dbf1909b49e5044f8fdaf0adc809f0c0722bdfd0"
+  integrity sha512-JrDGPAKjMGSP1G0DUoaceEJ3DZgAfr/q6X7FVk4+U5KxUSKviYGM2k6zWkfyyBHy5rAtzgYJFa1ro2O9PtoxwQ==
 
 concat-map@0.0.1:
   version "0.0.1"

@@ -11,7 +11,6 @@ COPY ./web /home/node/web
 RUN yarn build
 
 FROM node:lts-alpine
-RUN yarn global add @foal/cli -s
 
 RUN mkdir /home/node/api
 COPY ./api/package.json /home/node/api
