@@ -1,3 +1,6 @@
+import React, {Children, cloneElement, FunctionComponent, useRef, VoidFunctionComponent} from "react";
+import {FaMoon, FaSun} from "react-icons/fa";
+import {ImMenu} from "react-icons/im";
 import {
 	Box,
 	Button,
@@ -11,14 +14,21 @@ import {
 	Grid,
 	IconButton,
 	IconButtonProps,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay,
 	Text,
 	useColorMode,
 	useColorModeValue,
-	useDisclosure
+	useDisclosure,
+	useMediaQuery
 } from "@chakra-ui/react";
-import React, {Children, cloneElement, FunctionComponent, useRef, VoidFunctionComponent} from "react";
-import {FaMoon, FaSun} from "react-icons/fa";
-import {ImMenu} from "react-icons/im";
+
+import {loadProfileFromSession, UserStore} from "../stores";
 
 type ColorModeSwitcherProps = Partial<Omit<IconButtonProps, "aria-label">>;
 
@@ -38,16 +48,62 @@ const ColorModeSwitcher: FunctionComponent<ColorModeSwitcherProps> = props => {
 	/>;
 }
 
+const LoginButton: VoidFunctionComponent = () => {
+	const {isOpen, onOpen, onClose} = useDisclosure();
+
+	return <>
+		<Button
+			type="button"
+			aria-label="Login"
+			variant="ghost"
+			color="current"
+			size="sm"
+			ml="2"
+			onClick={onOpen}
+		>
+			Login
+		</Button>
+
+		<Modal
+			closeOnOverlayClick={false}
+			scrollBehavior="outside"
+			onClose={onClose}
+			isOpen={isOpen}
+			isCentered
+		>
+			<ModalOverlay />
+			<ModalContent>
+				<ModalHeader>Modal Title</ModalHeader>
+				<ModalCloseButton />
+				<ModalBody>
+					<Text>Hello</Text>
+				</ModalBody>
+
+				<ModalFooter>
+					<Button colorScheme="blue" mr={3} onClick={onClose}>
+						Close
+					</Button>
+					<Button variant="ghost">Secondary Action</Button>
+				</ModalFooter>
+			</ModalContent>
+		</Modal>
+	</>;
+}
+
 type NavBarProps = {
 	brand: string;
 	children: React.ReactElement | Array<React.ReactElement>;
 }
 
 export const NavBar: VoidFunctionComponent<NavBarProps> = props => {
+	const [isUsingDrawer] = useMediaQuery("(max-width: 62em)");
 	const {isOpen, onOpen, onClose} = useDisclosure();
 	const {colorMode} = useColorMode();
 
 	const btnRef = useRef<HTMLButtonElement>(null);
+
+	const userStore = UserStore.useState();
+	const [profileFinished, profileResult, profileUpdating] = loadProfileFromSession.useBeckon({session: userStore.session});
 
 	if (!props.children) return null;
 
@@ -71,11 +127,10 @@ export const NavBar: VoidFunctionComponent<NavBarProps> = props => {
 				<Text fontSize="xl" fontWeight="bold" mr="2">{props.brand}</Text>
 			</Flex>
 
-			<Flex
+			{!isUsingDrawer && <Flex
 				align="center"
 				justify="start"
 				gridColumn={2}
-				display={{lg: "flex", base: "none"}}
 				ml={4}
 			>
 				{Children.map(props.children, (child, index) => {
@@ -85,64 +140,56 @@ export const NavBar: VoidFunctionComponent<NavBarProps> = props => {
 						index
 					});
 				})}
-			</Flex>
+			</Flex>}
 
 			<Flex
 				align="center"
 				gridColumn={3}
 				pr={{base: 4, xl: 0}}
 			>
-				<Button
-					type="button"
-					aria-label="Login"
-					variant="ghost"
-					color="current"
-					size="sm"
-					ml="2"
-				>
-					Login
-				</Button>
+				{userStore.session === null && <LoginButton />}
 				<ColorModeSwitcher ml="2" />
 
-				<IconButton
-					aria-label="Open Navigation Drawer"
-					display={{lg: "none", base: "inline-flex"}}
-					variant="ghost"
-					color="current"
-					size="sm"
-					ml="2"
-					ref={btnRef}
-					icon={<ImMenu />}
-					onClick={onOpen}
-				/>
+				{isUsingDrawer && <>
+					<IconButton
+						aria-label="Open Navigation Drawer"
+						variant="ghost"
+						color="current"
+						size="sm"
+						ml="2"
+						ref={btnRef}
+						icon={<ImMenu />}
+						onClick={onOpen}
+					/>
+
+					<Drawer
+						isOpen={isOpen}
+						placement="right"
+						onClose={onClose}
+						finalFocusRef={btnRef}
+					>
+						<DrawerOverlay>
+							<DrawerContent>
+								<DrawerCloseButton />
+								<DrawerHeader>Navigation</DrawerHeader>
+
+								<DrawerBody>
+									<Flex direction="column">
+										{Children.map(props.children, (child, index) => {
+											return cloneElement(child, {
+												size: "sm",
+												w: "100%",
+												mb: 1,
+												index
+											});
+										})}
+									</Flex>
+								</DrawerBody>
+							</DrawerContent>
+						</DrawerOverlay>
+					</Drawer>
+				</>}
 			</Flex>
 		</Grid>
-
-		<Drawer
-			isOpen={isOpen}
-			placement="right"
-			onClose={onClose}
-			finalFocusRef={btnRef}
-		>
-			<DrawerOverlay>
-				<DrawerContent>
-					<DrawerCloseButton />
-					<DrawerHeader>Navigation</DrawerHeader>
-
-					<DrawerBody>
-						<Flex direction="column">
-							{Children.map(props.children, (child, index) => {
-								return cloneElement(child, {
-									size: "sm",
-									w: "100%",
-									mb: 1,
-									index
-								});
-							})}
-						</Flex>
-					</DrawerBody>
-				</DrawerContent>
-			</DrawerOverlay>
-		</Drawer>
 	</Box>;
 };
