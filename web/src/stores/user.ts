@@ -1,4 +1,5 @@
-import {Store} from "pullstate";
+import {Store, createAsyncAction, successResult, errorResult} from "pullstate";
+import axios from "axios";
 
 export type PermissionDto = {
 	codename: string;
@@ -24,10 +25,43 @@ export type UserDto = {
 
 export interface IUserStore {
 	session: string | null;
-	userInfo: UserDto | null;
+	profile: UserDto | null;
 }
 
 export const UserStore = new Store<IUserStore>({
 	session: sessionStorage.getItem("token"),
-	userInfo: null,
+	profile: null,
+});
+
+export const loadProfileFromSession = createAsyncAction<{
+	session: string | null;
+}, {
+	profile: UserDto;
+}>(async ({session}) => {
+	if (session === null) {
+		return errorResult([], "Could not load User's Profile : not logged in");
+	}
+
+	const response = await axios.get<UserDto>("/api/auth/me", {
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${session}`,
+		},
+	});
+
+	if (response.status == 200) {
+		return successResult({
+			profile: response.data,
+		});
+	} else {
+		return errorResult([], `Could not load User's Profile : ${response.status} => ${response.statusText}`);
+	}
+}, {
+	postActionHook: ({result}) => {
+		if (result.error) {
+			UserStore.update(s => s.profile = null);
+		} else {
+			UserStore.update(s => s.profile = result.payload.profile);
+		}
+	}
 });
