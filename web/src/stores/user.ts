@@ -58,9 +58,7 @@ export const loadProfileFromSession = createAsyncAction<{
 	}
 }, {
 	postActionHook: ({result}) => {
-		if (result.error) {
-			UserStore.update(s => s.profile = null);
-		} else {
+		if (!result.error) {
 			UserStore.update(s => s.profile = result.payload.profile);
 		}
 	}
