@@ -1,17 +1,16 @@
 {
-	"port": 3001,
 	"settings": {
-		"csrf": false,
-		"debug": false,
 		"loggerFormat": "tiny",
 		"session": {
-			"cookie": {
-				"sameSite": "lax"
-			},
 			"store": "@foal/typeorm"
 		}
 	},
 	"database": {
-		"synchronize": false
+		"host": "env(DATABASE_HOST)",
+		"port": "env(DATABASE_PORT)",
+		"username": "env(DATABASE_USERNAME)",
+		"password": "env(DATABASE_PASSWORD)",
+		"database": "env(DATABASE_DATABASE)",
+		"certificate": "env(DATABASE_CERTIFICATE)"
 	}
 }

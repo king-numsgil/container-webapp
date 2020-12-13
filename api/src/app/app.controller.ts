@@ -1,21 +1,14 @@
-import {Context, controller, createHttpResponseFile, Get, HttpResponseNotFound} from "@foal/core";
+import {controller, IAppController} from "@foal/core";
+import {createConnection} from "typeorm";
 
 import {ApiController} from "./controllers";
 
-export class AppController {
+export class AppController implements IAppController {
 	subControllers = [
 		controller("/api", ApiController),
 	];
 
-	@Get('*')
-	renderApp(ctx: Context) {
-		if (!ctx.request.accepts("html")) {
-			return new HttpResponseNotFound();
-		}
-
-		return createHttpResponseFile({
-			directory: './public',
-			file: 'index.html'
-		});
+	async init() {
+		await createConnection();
 	}
 }

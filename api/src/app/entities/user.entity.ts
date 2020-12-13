@@ -1,47 +1,18 @@
-import {
-	Column,
-	CreateDateColumn,
-	Entity,
-	JoinTable,
-	ManyToMany,
-	PrimaryGeneratedColumn,
-	UpdateDateColumn
-} from "typeorm";
-import {PermissionEntity} from "./permission.entity";
-import {GroupEntity} from "./group.entity";
+// import { hashPassword } from '@foal/core';
+import { BaseEntity, /*Column, */Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("Users")
-export class UserEntity {
-	@PrimaryGeneratedColumn("uuid")
-	id!: string;
+@Entity()
+export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-	@Column({unique: true, length: 64})
-	email!: string;
+  // @Column({ unique: true })
+  // email: string;
 
-	@Column({select: false})
-	password!: string;
+  // @Column()
+  // password: string;
 
-	@Column({length: 50})
-	firstName!: string;
-
-	@Column({length: 50})
-	lastName!: string;
-
-	@CreateDateColumn()
-	createdAt!: number;
-
-	@UpdateDateColumn()
-	updatedAt!: number;
-
-	@ManyToMany(type => GroupEntity, group => group.users, {
-		eager: true,
-	})
-	@JoinTable()
-	groups!: Array<GroupEntity>;
-
-	@ManyToMany(type => PermissionEntity, {
-		eager: true,
-	})
-	@JoinTable()
-	permissions!: Array<PermissionEntity>;
+  // async setPassword(password: string) {
+  //   this.password = await hashPassword(password);
+  // }
 }

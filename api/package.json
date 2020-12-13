@@ -1,37 +1,31 @@
 {
 	"name": "api",
 	"version": "0.1.0",
-	"description": "",
 	"license": "MIT",
+	"private": true,
+	"repository": {},
 	"scripts": {
-		"build:app": "./node_modules/.bin/foal rmdir build/app && copy-cli \"src/**/*.html\" build && tsc -p tsconfig.app.json",
-		"build:app:w": "tsc -p tsconfig.app.json -w",
+		"build": "foal rmdir build && tsc -p tsconfig.app.json",
 		"start": "node ./build/index.js",
-		"start:w": "supervisor -w ./build --no-restart-on error ./build/index.js",
-		"develop": "yarn run build:app && concurrently \"yarn run build:app:w\" \"yarn run start:w\"",
-		"build:scripts": "./node_modules/.bin/foal rmdir build/scripts && tsc -p tsconfig.scripts.json",
-		"build:scripts:w": "tsc -p tsconfig.scripts.json -w",
-		"build:migrations": "./node_modules/.bin/foal rmdir build/migrations && tsc -p tsconfig.migrations.json",
-		"migration:generate": "./node_modules/.bin/typeorm migration:generate",
-		"migration:run": "./node_modules/.bin/typeorm migration:run",
-		"migration:revert": "./node_modules/.bin/typeorm migration:revert"
+		"develop": "npm run build && concurrently \"tsc -p tsconfig.app.json -w\" \"supervisor -w ./build --no-restart-on error ./build/index.js\"",
+		"makemigrations": "foal rmdir build && tsc -p tsconfig.app.json && npx typeorm migration:generate --name migration && tsc -p tsconfig.app.json",
+		"migrations": "npx typeorm migration:run",
+		"revertmigration": "npx typeorm migration:revert"
 	},
 	"engines": {
-		"node": ">=8"
+		"node": ">=10"
 	},
 	"dependencies": {
-		"@foal/cli": "^1.12.0",
-		"@foal/core": "^1.12.0",
-		"@foal/typeorm": "^1.12.0",
+		"@foal/core": "^2.0.0",
+		"@foal/typeorm": "^2.0.0",
 		"pg": "^8.5.1",
 		"source-map-support": "^0.5.19",
 		"typeorm": "^0.2.29"
 	},
 	"devDependencies": {
-		"@types/node": "^14.14.10",
+		"@types/node": "^14.14.13",
 		"concurrently": "^5.3.0",
-		"copy": "^0.3.2",
 		"supervisor": "^0.12.0",
-		"typescript": "^4.1.2"
+		"typescript": "^4.1.3"
 	}
 }

@@ -1,11 +1,6 @@
-import {Context, controller, Get, HttpResponseOK} from "@foal/core";
-import {AuthController} from "./auth.controller";
+import {Context, Get, HttpResponseOK} from "@foal/core";
 
 export class ApiController {
-	subControllers = [
-		controller("/auth", AuthController),
-	];
-
 	@Get("/")
 	index(ctx: Context) {
 		return new HttpResponseOK("Hello world!");
