@@ -9,7 +9,6 @@ export class AppController implements IAppController {
 	];
 
 	async init() {
-		console.log(Config.get("database.host", "string"));
 		await createConnection();
 	}
 
