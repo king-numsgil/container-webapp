@@ -23,5 +23,5 @@ COPY --from=react /home/node/web/build /home/node/api/public
 
 EXPOSE 3001
 ENV NODE_ENV=production
-RUN yarn build:app && yarn build:scripts && yarn build:migrations
+RUN yarn build
 CMD ["node", "./build/index.js"]

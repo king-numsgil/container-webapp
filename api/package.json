@@ -5,17 +5,18 @@
 	"private": true,
 	"repository": {},
 	"scripts": {
-		"build": "foal rmdir build && tsc -p tsconfig.app.json",
+		"build": "./node_modules/.bin/foal rmdir build && tsc -p tsconfig.app.json",
 		"start": "node ./build/index.js",
 		"develop": "npm run build && concurrently \"tsc -p tsconfig.app.json -w\" \"supervisor -w ./build --no-restart-on error ./build/index.js\"",
-		"makemigrations": "foal rmdir build && tsc -p tsconfig.app.json && npx typeorm migration:generate --name migration && tsc -p tsconfig.app.json",
-		"migrations": "npx typeorm migration:run",
-		"revertmigration": "npx typeorm migration:revert"
+		"makemigrations": "./node_modules/.bin/foal rmdir build && tsc -p tsconfig.app.json && ./node_modules/.bin/typeorm migration:generate --name migration && tsc -p tsconfig.app.json",
+		"migrations": "./node_modules/.bin/typeorm migration:run",
+		"revertmigration": "./node_modules/.bin/typeorm migration:revert"
 	},
 	"engines": {
 		"node": ">=10"
 	},
 	"dependencies": {
+		"@foal/cli": "^2.0.0",
 		"@foal/core": "^2.0.0",
 		"@foal/typeorm": "^2.0.0",
 		"pg": "^8.5.1",

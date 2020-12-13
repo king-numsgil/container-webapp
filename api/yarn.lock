@@ -2,6 +2,15 @@
 # yarn lockfile v1
 
 
+"@foal/cli@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@foal/cli/-/cli-2.0.0.tgz#2863e6db1c6bbbcfa3594415f225255e56f6de81"
+  integrity sha512-M4F58lW9gePGF+n4cc8NaS8N5DljMu5z263uYH8edrKMc8uLELm/y8gp4XF+uIeaUO2yfxFmZK5L0tlBxgQPUw==
+  dependencies:
+    ajv "~6.12.0"
+    colors "~1.4.0"
+    commander "~6.2.0"
+
 "@foal/core@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@foal/core/-/core-2.0.0.tgz#bfbed9803821547c597e3a849ac929a366642f62"
@@ -263,6 +272,16 @@ color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+
+colors@~1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
+  integrity sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
+
+commander@~6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-6.2.0.tgz#b990bfb8ac030aedc6d11bc04d1488ffef56db75"
+  integrity sha512-zP4jEKbe8SHzKJYQmq8Y9gYjtO/POJLgIdKgV7B9qNmABVFVc+ctqSX6iXh4mCpJfRBOabiZ2YKPg8ciDw6C+Q==
 
 concat-map@0.0.1:
   version "0.0.1"

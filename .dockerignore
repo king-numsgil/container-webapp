@@ -1,0 +1,8 @@
+api/.env
+api/node_modules
+api/build
+api/yarn-debug.log*
+
+web/node_modules
+web/build
+web/yarn-debug.log*
