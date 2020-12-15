@@ -1,4 +1,4 @@
-import {Config, Context, controller, Get, HttpResponseNotFound, IAppController, render} from "@foal/core";
+import {Context, controller, Get, HttpResponseNotFound, IAppController, render} from "@foal/core";
 import {createConnection} from "typeorm";
 
 import {ApiController} from "./controllers";
