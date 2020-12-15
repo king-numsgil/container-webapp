@@ -20,6 +20,9 @@
 		"@foal/cli": "^2.0.0",
 		"@foal/core": "^2.0.0",
 		"@foal/typeorm": "^2.0.0",
+		"@foal/typestack": "^2.0.0",
+		"class-transformer": "^0.3.1",
+		"class-validator": "^0.12.2",
 		"pg": "^8.5.1",
 		"source-map-support": "^0.5.19",
 		"typeorm": "^0.2.29"
