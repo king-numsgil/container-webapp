@@ -8,10 +8,11 @@ import {
 	hashPassword,
 	HttpResponseOK,
 	HttpResponseUnauthorized,
-	Store,
 	Post,
+	Store,
+	UserRequired,
 	UseSessions,
-	verifyPassword, UserRequired
+	verifyPassword
 } from "@foal/core";
 
 import {User} from "../entities";
