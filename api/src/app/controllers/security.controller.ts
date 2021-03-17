@@ -75,7 +75,10 @@ export class SecurityController {
 	@ValidateBody(CredentialsDto)
 	async login(ctx: Context<User>) {
 		const body = ctx.request.body as CredentialsDto;
-		const user = await User.findOne({email: body.email});
+		const user = await User.findOne({
+			where: {email: body.email},
+			select: ["id", "password"],
+		});
 
 		if (!user) {
 			return new HttpResponseUnauthorized();
