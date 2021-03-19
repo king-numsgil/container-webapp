@@ -5,6 +5,7 @@ import {
 	Context,
 	createSession,
 	dependency,
+	Get,
 	hashPassword,
 	HttpResponseOK,
 	HttpResponseUnauthorized,
@@ -104,5 +105,11 @@ export class SecurityController {
 		}
 
 		return new HttpResponseOK();
+	}
+
+	@Get("/")
+	@UserRequired()
+	async getProfile(ctx: Context<User>) {
+		return new HttpResponseOK(ctx.user);
 	}
 }

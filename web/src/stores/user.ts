@@ -42,7 +42,7 @@ export const loadProfileFromSession = createAsyncAction<{
 		return errorResult([], "Could not load User's Profile : not logged in");
 	}
 
-	const response = await axios.get<UserDto>("/api/auth/me", {
+	const response = await axios.get<UserDto>("/api/security", {
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${session}`,
