@@ -1,37 +1,7 @@
-import {Store, createAsyncAction, successResult, errorResult} from "pullstate";
+import {createAsyncAction, errorResult, successResult} from "pullstate";
 import axios from "axios";
 
-export type PermissionDto = {
-	codename: string;
-	description: string;
-};
-
-export type GroupDto = {
-	id: string;
-	name: string;
-	permissions: Array<PermissionDto>;
-};
-
-export type UserDto = {
-	id: string;
-	email: string;
-	firstName: string;
-	lastName: string;
-	createdAt: number;
-	updatedAt: number;
-	groups: Array<GroupDto>;
-	permissions: Array<PermissionDto>;
-};
-
-export interface IUserStore {
-	session: string | null;
-	profile: UserDto | null;
-}
-
-export const UserStore = new Store<IUserStore>({
-	session: sessionStorage.getItem("token"),
-	profile: null,
-});
+import {UserDto, UserStore} from "./";
 
 export const loadProfileFromSession = createAsyncAction<{
 	session: string | null;
@@ -63,7 +33,7 @@ export const loadProfileFromSession = createAsyncAction<{
 				s.profile = result.payload.profile
 			});
 		} else {
-			console.log(result.message);
+			console.error(result.message);
 		}
 	}
 });

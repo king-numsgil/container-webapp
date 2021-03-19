@@ -1,7 +1,6 @@
 import React, {Children, cloneElement, FunctionComponent, useRef, useState, VoidFunctionComponent} from "react";
 import {FaMoon, FaSun} from "react-icons/fa";
 import {ImMenu} from "react-icons/im";
-import axios from "axios";
 import {
 	Box,
 	Button,
@@ -30,7 +29,7 @@ import {
 	useMediaQuery
 } from "@chakra-ui/react";
 
-import {loadProfileFromSession, UserStore} from "../stores";
+import {CredentialsDto, loadProfileFromSession, loginFromCredentials, UserStore} from "../stores";
 import {useForm} from "react-hook-form";
 
 type ColorModeSwitcherProps = Partial<Omit<IconButtonProps, "aria-label">>;
@@ -51,41 +50,22 @@ const ColorModeSwitcher: FunctionComponent<ColorModeSwitcherProps> = props => {
 	/>;
 }
 
-type SessionResponse = {
-	token: string;
-}
-
-type Credentials = {
-	email: string;
-	password: string;
-}
-
 const LoginButton: VoidFunctionComponent = () => {
 	const {isOpen, onOpen, onClose} = useDisclosure();
 	const [isLoading, setIsLoading] = useState(false);
 
-	const {register, handleSubmit, reset} = useForm<Credentials>();
+	const {register, handleSubmit, reset} = useForm<CredentialsDto>();
 
-	const onSubmit = async (data: Credentials) => {
+	const onSubmit = async (credentials: CredentialsDto) => {
 		setIsLoading(true);
-		try {
-			const response = await axios.post<SessionResponse>("/api/security/login", data, {
-				headers: {
-					"Content-Type": "application/json",
-				}
-			});
-
-			UserStore.update(store => {
-				store.session = response.data.token
-			});
-			sessionStorage.setItem("token", response.data.token);
-			setIsLoading(false);
-			onClose();
-		} catch (e) {
-			console.error(e);
+		const result = await loginFromCredentials.run({credentials});
+		if (result.error) {
 			alert("Wrong Credentials!");
 			reset();
 			setIsLoading(false);
+		} else {
+			setIsLoading(false);
+			onClose();
 		}
 	};
 
