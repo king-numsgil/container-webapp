@@ -1,4 +1,5 @@
 import React, {Children, cloneElement, FunctionComponent, useRef, useState, VoidFunctionComponent} from "react";
+import {Controller, useForm} from "react-hook-form";
 import {FaMoon, FaSun} from "react-icons/fa";
 import {ImMenu} from "react-icons/im";
 import {
@@ -30,7 +31,6 @@ import {
 } from "@chakra-ui/react";
 
 import {CredentialsDto, loadProfileFromSession, loginFromCredentials, UserStore} from "../stores";
-import {useForm} from "react-hook-form";
 
 type ColorModeSwitcherProps = Partial<Omit<IconButtonProps, "aria-label">>;
 
@@ -53,8 +53,9 @@ const ColorModeSwitcher: FunctionComponent<ColorModeSwitcherProps> = props => {
 const LoginButton: VoidFunctionComponent = () => {
 	const {isOpen, onOpen, onClose} = useDisclosure();
 	const [isLoading, setIsLoading] = useState(false);
+	const initialFocusRef = useRef<HTMLInputElement>(null);
 
-	const {register, handleSubmit, reset} = useForm<CredentialsDto>();
+	const {control, handleSubmit, reset} = useForm<CredentialsDto>();
 
 	const onSubmit = async (credentials: CredentialsDto) => {
 		setIsLoading(true);
@@ -83,6 +84,7 @@ const LoginButton: VoidFunctionComponent = () => {
 		</Button>
 
 		<Modal
+			initialFocusRef={initialFocusRef}
 			closeOnOverlayClick={false}
 			scrollBehavior="outside"
 			onClose={onClose}
@@ -95,21 +97,33 @@ const LoginButton: VoidFunctionComponent = () => {
 					<ModalHeader>Enter your Credentials</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
-						<Input
-							type="email"
+						<Controller
 							name="email"
-							placeholder="Email"
-							ref={register}
-							required
-							isDisabled={isLoading}
+							control={control}
+							defaultValue=""
+							render={({onChange, value}) => <Input
+								onChange={onChange}
+								value={value}
+								type="email"
+								placeholder="Email"
+								ref={initialFocusRef}
+								required
+								isDisabled={isLoading}
+							/>}
 						/>
-						<Input
-							type="password"
+						<Controller
 							name="password"
-							placeholder="Password"
-							ref={register}
-							required
-							isDisabled={isLoading}
+							control={control}
+							defaultValue=""
+							render={({onChange, value}) => <Input
+								onChange={onChange}
+								value={value}
+								type="password"
+								placeholder="Password"
+								mt={3}
+								required
+								isDisabled={isLoading}
+							/>}
 						/>
 					</ModalBody>
 
