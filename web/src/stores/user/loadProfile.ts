@@ -32,8 +32,6 @@ export const loadProfileFromSession = createAsyncAction<{
 			UserStore.update(s => {
 				s.profile = result.payload.profile
 			});
-		} else {
-			console.error(result.message);
 		}
 	}
 });
