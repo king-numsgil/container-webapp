@@ -42,24 +42,28 @@ export const loadProfileFromSession = createAsyncAction<{
 		return errorResult([], "Could not load User's Profile : not logged in");
 	}
 
-	const response = await axios.get<UserDto>("/api/security", {
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${session}`,
-		},
-	});
+	try {
+		const response = await axios.get<UserDto>("/api/security", {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${session}`,
+			},
+		});
 
-	if (response.status == 200) {
 		return successResult({
 			profile: response.data,
 		});
-	} else {
-		return errorResult([], `Could not load User's Profile : ${response.status} => ${response.statusText}`);
+	} catch (e) {
+		return errorResult([], `Could not load User's Profile : ${JSON.stringify(e, null, 2)}`);
 	}
 }, {
 	postActionHook: ({result}) => {
 		if (!result.error) {
-			UserStore.update(s => s.profile = result.payload.profile);
+			UserStore.update(s => {
+				s.profile = result.payload.profile
+			});
+		} else {
+			console.log(result.message);
 		}
 	}
 });
