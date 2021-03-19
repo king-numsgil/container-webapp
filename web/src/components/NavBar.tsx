@@ -1,6 +1,7 @@
-import React, {Children, cloneElement, FunctionComponent, useRef, VoidFunctionComponent} from "react";
+import React, {Children, cloneElement, FunctionComponent, useRef, useState, VoidFunctionComponent} from "react";
 import {FaMoon, FaSun} from "react-icons/fa";
 import {ImMenu} from "react-icons/im";
+import axios from "axios";
 import {
 	Box,
 	Button,
@@ -14,6 +15,7 @@ import {
 	Grid,
 	IconButton,
 	IconButtonProps,
+	Input,
 	Modal,
 	ModalBody,
 	ModalCloseButton,
@@ -29,6 +31,7 @@ import {
 } from "@chakra-ui/react";
 
 import {loadProfileFromSession, UserStore} from "../stores";
+import {useForm} from "react-hook-form";
 
 type ColorModeSwitcherProps = Partial<Omit<IconButtonProps, "aria-label">>;
 
@@ -48,8 +51,43 @@ const ColorModeSwitcher: FunctionComponent<ColorModeSwitcherProps> = props => {
 	/>;
 }
 
+type SessionResponse = {
+	token: string;
+}
+
+type Credentials = {
+	email: string;
+	password: string;
+}
+
 const LoginButton: VoidFunctionComponent = () => {
 	const {isOpen, onOpen, onClose} = useDisclosure();
+	const [isLoading, setIsLoading] = useState(false);
+
+	const {register, handleSubmit, reset} = useForm<Credentials>();
+
+	const onSubmit = async (data: Credentials) => {
+		setIsLoading(true);
+		try {
+			const response = await axios.post<SessionResponse>("/api/security/login", data, {
+				headers: {
+					"Content-Type": "application/json",
+				}
+			});
+
+			UserStore.update(store => {
+				store.session = response.data.token
+			});
+			sessionStorage.setItem("token", response.data.token);
+			setIsLoading(false);
+			onClose();
+		} catch (e) {
+			console.error(e);
+			alert("Wrong Credentials!");
+			reset();
+			setIsLoading(false);
+		}
+	};
 
 	return <>
 		<Button
@@ -73,18 +111,35 @@ const LoginButton: VoidFunctionComponent = () => {
 		>
 			<ModalOverlay />
 			<ModalContent>
-				<ModalHeader>Modal Title</ModalHeader>
-				<ModalCloseButton />
-				<ModalBody>
-					<Text>Hello</Text>
-				</ModalBody>
+				<form onSubmit={handleSubmit(onSubmit)}>
+					<ModalHeader>Enter your Credentials</ModalHeader>
+					<ModalCloseButton />
+					<ModalBody>
+						<Input
+							type="email"
+							name="email"
+							placeholder="Email"
+							ref={register}
+							required
+							isDisabled={isLoading}
+						/>
+						<Input
+							type="password"
+							name="password"
+							placeholder="Password"
+							ref={register}
+							required
+							isDisabled={isLoading}
+						/>
+					</ModalBody>
 
-				<ModalFooter>
-					<Button colorScheme="blue" mr={3} onClick={onClose}>
-						Close
-					</Button>
-					<Button variant="ghost">Secondary Action</Button>
-				</ModalFooter>
+					<ModalFooter>
+						<Button variant="ghost" mr={3} isLoading={isLoading}>Signup</Button>
+						<Button colorScheme="blue" type="submit" isLoading={isLoading}>
+							Login
+						</Button>
+					</ModalFooter>
+				</form>
 			</ModalContent>
 		</Modal>
 	</>;
