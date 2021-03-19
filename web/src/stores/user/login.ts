@@ -18,7 +18,7 @@ export const loginFromCredentials = createAsyncAction<{
 	token: string;
 }>(async ({credentials}) => {
 	try {
-		const response = await axios.post<SessionResponse>("/api/security/login", credentials, {
+		const response = await axios.post<SessionResponse>("/api/security", credentials, {
 			headers: {
 				"Content-Type": "application/json",
 			},

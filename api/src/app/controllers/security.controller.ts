@@ -4,6 +4,7 @@ import {ValidateBody} from "@foal/typestack";
 import {
 	Context,
 	createSession,
+	Delete,
 	dependency,
 	Get,
 	hashPassword,
@@ -72,7 +73,7 @@ export class SecurityController {
 		});
 	}
 
-	@Post("/login")
+	@Post("/")
 	@ValidateBody(CredentialsDto)
 	async login(ctx: Context<User>) {
 		const body = ctx.request.body as CredentialsDto;
@@ -97,7 +98,7 @@ export class SecurityController {
 		});
 	}
 
-	@Post("/logout")
+	@Delete("/")
 	@UserRequired()
 	async logout(ctx: Context<User>) {
 		if (ctx.session) {
