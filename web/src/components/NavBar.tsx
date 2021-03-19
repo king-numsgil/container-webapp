@@ -30,7 +30,7 @@ import {
 	useMediaQuery
 } from "@chakra-ui/react";
 
-import {CredentialsDto, loadProfileFromSession, loginFromCredentials, UserStore} from "../stores";
+import {CredentialsDto, loadProfileFromSession, loginFromCredentials, logout, UserStore} from "../stores";
 
 type ColorModeSwitcherProps = Partial<Omit<IconButtonProps, "aria-label">>;
 
@@ -77,7 +77,7 @@ const LoginButton: VoidFunctionComponent = () => {
 			variant="ghost"
 			color="current"
 			size="sm"
-			ml="2"
+			ml={2}
 			onClick={onOpen}
 		>
 			Login
@@ -197,6 +197,17 @@ export const NavBar: VoidFunctionComponent<NavBarProps> = props => {
 				pr={{base: 4, xl: 0}}
 			>
 				{userStore.session === null && <LoginButton />}
+				{userStore.session !== null && <Button
+					type="button"
+					aria-label="Logout"
+					variant="ghost"
+					color="current"
+					size="sm"
+					ml={2}
+					onClick={async () => await logout.run({session: userStore.session})}
+				>
+					Logout
+				</Button>}
 				<ColorModeSwitcher ml="2" />
 
 				{isUsingDrawer && <>

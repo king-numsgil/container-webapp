@@ -1,6 +1,7 @@
 import {Store} from "pullstate";
 
 export * from "./loadProfile";
+export * from "./logout";
 export * from "./login";
 
 export type PermissionDto = {
