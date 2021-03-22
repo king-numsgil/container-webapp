@@ -9,7 +9,7 @@ export const Page: FunctionComponent = props => {
 		<NavBar brand="Numsgil Co">
 			<Button
 				type="button"
-				aria-label="Login"
+				aria-label="Home"
 				variant="outline"
 				color="current"
 			>

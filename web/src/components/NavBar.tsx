@@ -115,6 +115,10 @@ const LoginButton: VoidFunctionComponent = () => {
 							name="password"
 							control={control}
 							defaultValue=""
+							rules={{
+								minLength: 6,
+								pattern: /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
+							}}
 							render={({onChange, value}) => <Input
 								onChange={onChange}
 								value={value}
@@ -123,6 +127,7 @@ const LoginButton: VoidFunctionComponent = () => {
 								mt={3}
 								required
 								isDisabled={isLoading}
+								minLength={6}
 							/>}
 						/>
 					</ModalBody>
