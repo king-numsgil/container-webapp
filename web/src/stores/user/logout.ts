@@ -26,6 +26,7 @@ export const logout = createAsyncAction<{
 	postActionHook: ({result}) => {
 		UserStore.update(s => {
 			s.session = null;
+			s.profile = null;
 		});
 		sessionStorage.removeItem("token");
 
