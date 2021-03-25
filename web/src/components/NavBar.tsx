@@ -1,6 +1,7 @@
 import React, {Children, cloneElement, FunctionComponent, useRef, useState, VoidFunctionComponent} from "react";
 import {Controller, useForm} from "react-hook-form";
 import {FaMoon, FaSun} from "react-icons/fa";
+import {useNavigation} from "react-navi";
 import {ImMenu} from "react-icons/im";
 import {
 	Box,
@@ -56,6 +57,7 @@ const LoginButton: VoidFunctionComponent = () => {
 	const initialFocusRef = useRef<HTMLInputElement>(null);
 
 	const {control, handleSubmit, reset} = useForm<CredentialsDto>();
+	const nav = useNavigation();
 
 	const onSubmit = async (credentials: CredentialsDto) => {
 		setIsLoading(true);
@@ -133,7 +135,18 @@ const LoginButton: VoidFunctionComponent = () => {
 					</ModalBody>
 
 					<ModalFooter>
-						<Button variant="ghost" mr={3} isLoading={isLoading}>Signup</Button>
+						<Button
+							variant="ghost"
+							mr={3}
+							isLoading={isLoading}
+							onClick={async event => {
+								event.preventDefault();
+								onClose();
+								await nav.navigate("/account/signup");
+							}}
+						>
+							Signup
+						</Button>
 						<Button colorScheme="blue" type="submit" isLoading={isLoading}>
 							Login
 						</Button>
